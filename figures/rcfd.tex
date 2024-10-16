@@ -8,10 +8,13 @@ type t =
     mutable state: state [@atomic];
   }
 
+let closed = Closing (fun () -> ())
 let close t =
   match t.state with
+  | Closing _ -> false
   | Open fd as prev ->
-      let next = Closing (fun () -> Unix.close fd) in
+      let close () = Unix.close fd in
+      let next = Closing close in
       if Atomic.Loc.compare_and_set [%atomic.loc t.state] prev next then (
         if t.ops == 0
         && Atomic.Loc.compare_and_set [%atomic.loc t.state] next closed
@@ -21,9 +24,7 @@ let close t =
       ) else (
         false
       )
-  | Closing _ ->
-      false
 \end{minted}
 \caption{\mintinline{ocaml}{Rcfd.close} function from the \Eio~\cite{eio} library}
-\label{fig:stack}
+\label{fig:rcfd}
 \end{figure}

@@ -3,7 +3,7 @@
 
 Designing concurrent algorithms, in particular \href{https://en.wikipedia.org/wiki/Non-blocking_algorithm#Lock-freedom}{\emph{lock-free}} algorithms, is a notoriously difficult task.
 In this paper, we are concerned with proving the correctness of these algorithms.
-The question of performance is also crucial and requires special expertise; we will not address it here.
+% The question of performance is also crucial and requires special expertise; we will not address it here.
 
 \input{figures/stack}
 
@@ -42,7 +42,7 @@ In fact, this kind of property appears frequently in lockfree algorithms; it als
 
 Once again, this argument requires special care in the semantics of physical equality.
 In short, we have to reveal something about the physical identity of some abstract values.
-Yet, we cannot reveal too much---in particular, we cannot simply convert an abstract value to a concrete one (a memory location)---, since the \OCaml compiler may perform optimizations like sharing of immutable values and hash-consing.
+Yet, we cannot reveal too much---in particular, we cannot simply convert an abstract value to a concrete one (a memory location)---, since the \OCaml compiler performs optimizations like sharing of immutable constants, and the semantics should remain compatible with adding other optimizations later on, such as forms of hash-consing.
 
 \paragraph{A formalized \OCaml fragment for the verification of concurrent algorithms.}
 
