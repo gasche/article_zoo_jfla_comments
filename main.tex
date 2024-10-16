@@ -1,0 +1,81 @@
+\documentclass[review,english]{jflart}
+
+%------------------------------------------------------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%------------------------------------------------------------
+
+\jfla{36}{2025}
+
+%------------------------------------------------------------
+
+\usepackage[style=numeric, sorting=ynt, doi=false, maxnames=10]{biblatex}
+
+\addbibresource{main.bib}
+
+%------------------------------------------------------------
+
+\usepackage[capitalize,noabbrev,nameinlink]{cleveref}
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true, colorlinks=true, citecolor=purple}
+
+%------------------------------------------------------------
+
+\usepackage{minted}
+
+\DeclareUnicodeCharacter{3B9}{$\iota$}
+\DeclareUnicodeCharacter{2200}{$\forall$}
+\DeclareUnicodeCharacter{2203}{$\exists$}
+\DeclareUnicodeCharacter{2260}{$\neq$}
+
+%------------------------------------------------------------
+
+\usepackage{mathtools}
+
+%------------------------------------------------------------
+
+\usepackage{macros}
+
+%------------------------------------------------------------
+
+\title{
+  A framework for the verification \\
+  of concurrent \OCaml~5 programs \\
+  using separation logic
+}
+
+\author{Clément Allain}
+\authorrunning{Allain}
+
+\affil{INRIA}
+
+%------------------------------------------------------------
+%------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  \input{abstract}
+\end{abstract}
+
+\input{introduction}
+
+\input{related}
+
+\input{zoo}
+
+\input{features}
+
+\input{conclusion}
+
+\input{acknowledgments}
+
+\newpage
+\printbibliography
+
+\end{document}

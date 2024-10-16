@@ -1,0 +1,50 @@
+\section{\Zoo in practice}
+\label{sec:zoo}
+
+\input{figures/zoo}
+
+Before describing the salient features of our language, \Zoo, in \cref{sec:features}, we give an overview of the framework.
+
+\paragraph{From \OCaml to \Zoo.}
+
+First, \OCaml source files are translated into \Zoo by the \texttt{ocaml2zoo} tool.
+The \Zoo syntax is given in \cref{fig:zoo}\footnote{More precisely, it is the syntax of the surface language, including many \Coq notations.}, omitting mutually recursive toplevel functions that are treated specifically.
+Essentially, \Zoo is an untyped, ML-like, imperative, concurrent programming language.
+The supported \OCaml fragment includes: shallow \mintinline{ocaml}{match}, ADTs, records, inline records, atomic record fields, unboxed types, toplevel mutually recursive functions.
+
+For instance, the \mintinline{ocaml}{push} function from \cref{sec:introduction} is translated into:
+
+\begin{minted}{coq}
+Definition stack_push : val :=
+  rec: "push" "t" "v" =>
+    let: "old" := !"t" in
+    let: "new_" := "v" :: "old" in
+    ifnot: CAS "t".[contents] "old" "new_" then (
+      Yield ;;
+      "push" "t" "v"
+    ).
+\end{minted}
+
+\paragraph{Specifications and proofs.}
+
+Second, the user writes specifications for the translated functions and prove them using the \Iris proof mode~\cite{DBLP:journals/pacmpl/KrebbersJ0TKTCD18}.
+
+For instance, the specification for the \mintinline{ocaml}{stack_push} function would be:
+
+\begin{minted}{coq}
+Lemma stack_push_spec t ι v :
+  <<<
+    stack_inv t ι
+  | ∀∀ vs, stack_model t vs
+  >>>
+    stack_push t v @ ↑ι
+  <<<
+    stack_model t (v :: vs)
+  | RET (); True
+  >>>.
+Proof.
+  ...
+Qed.
+\end{minted}
+
+Here, we use a \emph{logically atomic specification}~\cite{DBLP:conf/ecoop/PintoDG14}, which has been proven~\cite{DBLP:journals/pacmpl/BirkedalDGJST21} to be equivalent to \emph{linearizability}~\cite{DBLP:journals/toplas/HerlihyW90} in sequentially consistent memory models.
