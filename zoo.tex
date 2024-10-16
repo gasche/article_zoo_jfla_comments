@@ -12,6 +12,8 @@ The \Zoo syntax is given in \cref{fig:zoo}\footnote{More precisely, it is the sy
 Essentially, \Zoo is an untyped, ML-like, imperative, concurrent programming language.
 The supported \OCaml fragment includes: shallow \mintinline{ocaml}{match}, ADTs, records, inline records, atomic record fields, unboxed types, toplevel mutually recursive functions.
 
+% [Gabriel]: it may not be obvious to the reader why Zoo is untyped -- why it is reasonable not to have a type system, despite the known benefits of type systems in clarifying programs and preventing bugs.
+
 For instance, the \mintinline{ocaml}{push} function from \cref{sec:introduction} is translated into:
 
 \begin{minted}{coq}

@@ -36,6 +36,10 @@ Definition swap : val :=
     "t" <-{f1} "t".{f2} ;; "t" <-{f2} "t".{f1}.
 \end{minted}
 
+% [Gabriel]: I would naively expect the semantics of this swap function to be wrong, because the read of t.{f1} happens after the write to the same location, so that swap {f1 = 0; f2 = 1} sets its input to {f1 = 1; f2 = 1} instead of {f1 = 1; f2 = 0}. Is that the case? If yes, I would maybe recommend writing another example, or a correct implementation using an intermediate let-binding.
+%
+% Note: I would find [x], [y] more evocative than [f1], [f2] as field names.
+
 \subsection{Mutually recursive functions}
 
 \Zoo supports non-recursive ($\texttt{fun:}\ x_1 \dots x_n\ \texttt{=>}\ e$) and recursive ($\texttt{rec:}\ f\ x_1 \dots x_n\ \texttt{=>}\ e$) functions but only \emph{toplevel} mutually recursive functions.
